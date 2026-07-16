@@ -47,6 +47,8 @@ h1,h2,h3,.disp{font-family:'Disp';font-weight:500;line-height:1.1}
 .shead{position:sticky;top:0;background:rgba(252,248,242,.95);backdrop-filter:blur(8px);display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line);z-index:5}
 .shead .bk{background:none;border:none;font-size:20px;color:var(--ink);cursor:pointer;line-height:1}.shead h2{font-size:20px}
 .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}.grid3 .t{aspect-ratio:1;border-radius:8px;background-size:cover;background-position:center}
+.grid3 .t.addph{position:relative;box-shadow:0 0 0 2px var(--rose-d)}
+.newtag{position:absolute;bottom:5px;left:5px;background:var(--rose-d);color:#fff;font-size:8px;letter-spacing:.06em;border-radius:20px;padding:2px 7px}
 .field{margin-bottom:16px}.field label{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--sage-d);margin-bottom:7px}
 .field input,.field textarea{width:100%;font-family:'UI';font-size:14px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px}
 .field textarea{min-height:90px;resize:vertical}
@@ -261,9 +263,12 @@ function rsvpSubmit(){const n=$('#rsvp-name').value.trim();if(rsvpYes&&!n){toast
   $('#rsvp-body').innerHTML='<div class="center" style="padding:40px 0">'+(rsvpYes?`<div class="it" style="font-size:30px;color:var(--rose-d)">Спасибо, ${n||'друзья'}!</div><p class="muted" style="margin-top:14px">Мы очень ждём вас 12 сентября 🌸</p>`:'<div class="it" style="font-size:28px;color:var(--rose-d)">Будем скучать</div><p class="muted" style="margin-top:14px">Спасибо, что дали знать. Обнимаем.</p>')+'</div>';}
 
 // album
-let albCount=342;const albImgs=()=>Object.keys(IMG).filter(k=>k.startsWith('alb'));
-function albRender(){const b=albImgs();let h='';for(let i=0;i<9;i++)h+=`<div class="t" style="background-image:url(${IMG[b[i%b.length]]})"></div>`;$('#alb-grid').innerHTML=h;$('#alb-count').textContent=(albCount+LS.get('albAdd',0))+' снимков · 58 гостей';}
-function albAdd(){LS.set('albAdd',LS.get('albAdd',0)+1);albCount++;albRender();toast('Фото добавлено в общий альбом ✓')}
+const albImgs=()=>Object.keys(IMG).filter(k=>k.startsWith('alb'));
+function albRender(){const b=albImgs();const added=LS.get('albAdd',0);let h='';
+  for(let i=0;i<added;i++){const im=b[(b.length-1-(i%b.length)+b.length)%b.length];h+=`<div class="t addph" style="background-image:url(${IMG[im]})"><span class="newtag">вы</span></div>`;}
+  for(let i=0;i<9;i++)h+=`<div class="t" style="background-image:url(${IMG[b[i%b.length]]})"></div>`;
+  const g=$('#alb-grid');if(g)g.innerHTML=h;const c=$('#alb-count');if(c)c.textContent=(342+added)+' снимков · 58 гостей';}
+function albAdd(){LS.set('albAdd',LS.get('albAdd',0)+1);albRender();burst(8);toast('Ваше фото добавлено в альбом ✓');}
 
 // kids
 $('#kid-grid').innerHTML=D.kids.map(k=>`<div><div style="aspect-ratio:4/5;border-radius:12px;background-size:cover;background-position:center;background-image:url(${IMG[k[0]]})"></div><div class="small muted center" style="margin-top:6px">${k[1]}</div></div>`).join('');
