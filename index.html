@@ -331,7 +331,7 @@ function gorko(){if(Date.now()-LS.get('gorkoLast',0)<300000){gorkoCD();toast('Г
   if(n%10===0){const k=$('#kiss');k.classList.add('show');burst(40);setTimeout(()=>k.classList.remove('show'),1600);}}
 
 // auction
-function bidData(){return LS.get('bids',[{n:'Дядя Коля',s:1500}])}
+function bidData(){return LS.get('bids',[{n:'Марина',s:400},{n:'Олег',s:700},{n:'Аня',s:950},{n:'Света',s:1200},{n:'Дядя Коля',s:1500}])}
 function bidRender(){const arr=bidData();const top=arr[arr.length-1];$('#bid-amt').textContent=top.s.toLocaleString('ru')+' ₽';$('#bid-who').textContent=top.n;
   $('#bid-list').innerHTML=arr.slice().reverse().map(b=>`<div class="bidrow"><span>${b.n}</span><span style="font-family:Disp;color:var(--rose-d)">${b.s.toLocaleString('ru')} ₽</span></div>`).join('');}
 function bidMake(){const n=$('#bid-name').value.trim()||'Гость';const s=parseInt($('#bid-sum').value,10);const top=bidData().slice(-1)[0].s;
@@ -356,7 +356,7 @@ function closeSBP(){$('#sbp').classList.remove('open');}
 function sbpPay(){const b=$('#sbp-pay');b.textContent='Оплата…';b.disabled=true;setTimeout(()=>{b.textContent='Оплачено ✓';setTimeout(()=>{closeSBP();if(sbpCb)sbpCb();},700);},1100);}
 
 // chat
-function chatData(){return LS.get('chat',[{n:'Оля',t:'Невеста — просто богиня 😍'},{n:'Дядя Витя',t:'А где стол с закусками?'},{n:'Ксюша',t:'Кто со мной жечь на танцполе?! 💃'},{n:'Максим',t:'Тост от свидетеля скоро ⚡'}]);}
+function chatData(){return LS.get('chat',[{n:'Оля',t:'Невеста — просто богиня 😍'},{n:'Дядя Витя',t:'А где стол с закусками?'},{n:'Ксюша',t:'Кто со мной жечь на танцполе?! 💃'},{n:'Максим',t:'Тост от свидетеля скоро ⚡'},{n:'Аня',t:'Какие же вы красивые оба ❤'},{n:'Игорь',t:'Диджей, поставь что-нибудь бодрое!'},{n:'Света',t:'Уже реву от счастья 🥹'},{n:'Паша',t:'Горько кричать будем?)'},{n:'Лена',t:'Видели торт? Это космос 🎂'}]);}
 function chatRender(){const f=$('#chat-feed');if(!f)return;f.innerHTML=chatData().map(m=>`<div class="chat-msg${m.me?' me':''}"><div class="cn">${m.n}</div><div class="ct">${m.t}</div></div>`).join('');}
 function chatSend(){const i=$('#chat-input');const t=i.value.trim();if(!t)return;const a=chatData();a.push({n:'Вы',t,me:1});LS.set('chat',a);i.value='';chatRender();burst(4);const f=$('#chat-feed');if(f)f.lastElementChild&&f.lastElementChild.scrollIntoView({block:'nearest'});}
 
