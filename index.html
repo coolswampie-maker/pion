@@ -227,7 +227,7 @@ h1,h2,h3,.disp{font-family:'Disp';font-weight:500;line-height:1.1}
   <button class="on" data-nav="home" onclick="close_()"><svg viewBox="0 0 38 38" class="ic"><path d="M5 15L19 4l14 11" stroke="#A9736F" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 14v16h22V14" stroke="#A9736F" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Дом</span></button>
   <button data-nav="album" onclick="open_('album')"><svg viewBox="0 0 38 38" class="ic"><rect x="5" y="7" width="28" height="24" rx="3" stroke="#6E655B" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13" cy="15" r="2.6" stroke="#6E655B" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 27l8-7 6 5 5-4 9 8" stroke="#6E655B" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Альбом</span></button>
   <button data-nav="music" onclick="open_('music')"><svg viewBox="0 0 38 38" class="ic"><path d="M14 28V9l16-3v16" stroke="#6E655B" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="28" r="4" stroke="#6E655B" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="26" cy="25" r="4" stroke="#6E655B" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Музыка</span></button>
-  <button data-nav="gorko" onclick="open_('gorko')"><svg viewBox="0 0 38 38" class="ic"><path d="M19 31S6 23 6 14.5A5.5 5.5 0 0119 11a5.5 5.5 0 0113 3.5C32 23 19 31 19 31z" stroke="#6E655B" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Горько</span></button>
+  <button data-nav="chat" onclick="open_('chat')"><svg viewBox="0 0 38 38" class="ic"><path d="M6 8h18a3 3 0 013 3v7a3 3 0 01-3 3H14l-6 5v-5H6a3 3 0 01-3-3v-7a3 3 0 013-3z" stroke="#6E655B" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 13h11M10 17h7" stroke="#6E655B" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Чат</span></button>
   <button data-nav="more" onclick="scrollHub()"><svg viewBox="0 0 38 38" class="ic"><circle cx="10" cy="19" r="2.4" fill="#6E655B"/><circle cx="19" cy="19" r="2.4" fill="#6E655B"/><circle cx="28" cy="19" r="2.4" fill="#6E655B"/></svg><span>Ещё</span></button>
 </div>
 <div class="toast" id="toast"></div>
@@ -243,7 +243,7 @@ $$('[data-img]').forEach(e=>{const n=e.getAttribute('data-img');if(IMG[n])e.styl
 
 // nav / screens
 function open_(id){const s=$('#s-'+id);if(!s)return;$$('.screen').forEach(x=>{if(x!==s)x.classList.remove('open')});s.scrollTop=0;s.classList.add('open');$('.modebar').style.display='none';
-  $$('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.nav===id));if(!['album','music','gorko'].includes(id))$$('.nav button').forEach(b=>b.classList.remove('on'));
+  $$('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.nav===id));if(!['album','music','chat'].includes(id))$$('.nav button').forEach(b=>b.classList.remove('on'));
   if(id==='seating')renderHall(null);}
 function close_(){$$('.screen').forEach(s=>s.classList.remove('open'));$('.modebar').style.display='';$$('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.nav==='home'));}
 function scrollHub(){close_();const h=$('.hub');if(h)h.scrollIntoView({behavior:'smooth'});}
