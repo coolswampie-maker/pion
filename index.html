@@ -31,7 +31,7 @@ h1,h2,h3,.disp{font-family:'Disp';font-weight:500;line-height:1.1}
 @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
 .cd{display:flex;justify-content:center;gap:14px;margin-top:20px}
 .cd .u{text-align:center;min-width:52px}.cd .n{font-family:'Disp';font-size:34px;color:var(--rose-d);line-height:1}
-.cd .l{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink2);margin-top:4px}
+.cd .l{font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink2);margin-top:4px}
 .storyimg{height:210px;border-radius:14px;background-size:cover;background-position:center;margin:6px 0}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.two .storyimg{height:150px;margin:0}
 .row{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line)}
@@ -362,7 +362,9 @@ function renderHall(found){const R=27,CR=39;let g='';
     for(let s=0;s<8;s++){const a=(s/8)*2*Math.PI-Math.PI/2;const sx=cx+CR*Math.cos(a),sy=cy+CR*Math.sin(a);const seatOn=on&&found[1]===s;
       g+=`<circle cx="${sx}" cy="${sy}" r="${seatOn?6:4.5}" fill="${seatOn?'#A9736F':(on?'#D9ACA6':'#DDD5C6')}"/>`;
       if(seatOn)g+=`<circle cx="${sx}" cy="${sy}" r="6" fill="none" stroke="#A9736F" stroke-width="1.5"><animate attributeName="r" values="6;13;6" dur="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0;1" dur="1.6s" repeatCount="indefinite"/></circle>`;}
-    g+=`<text x="${cx}" y="${cy+R+16}" text-anchor="middle" font-family="UI" font-size="8" fill="#9a8f84">${tb[0]}</text>`;});
+    // font-size в единицах viewBox (312 шириной): на телефоне 320px схема ужимается
+    // до ~0.9, поэтому 8 давало нечитаемые 7px на экране. 11 → около 10px на 320 и 13px на 430.
+    g+=`<text x="${cx}" y="${cy+R+17}" text-anchor="middle" font-family="UI" font-size="11" fill="#8d8377">${tb[0]}</text>`;});
   $('#hall').innerHTML=`<svg viewBox="0 0 312 430" style="width:100%">${g}</svg>`;}
 function seatFind(){const raw=$('#seat-name').value.trim().toLowerCase().split(' ')[0];const e=D.seatOf[raw];const box=$('#seat-res');
   if(!e){renderHall(null);box.innerHTML='<div class="card center" style="margin-top:14px"><p class="muted">Не нашли имя в списке. Проверьте написание или обратитесь к координатору.</p></div>';return}
