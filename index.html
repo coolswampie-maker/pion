@@ -6,9 +6,11 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{--cream:#FCF8F2;--paper:#FBF6EE;--rose:#C2938F;--rose-d:#A9736F;--rose-l:#E7CEC8;--sage:#93A17F;--sage-d:#6F8360;
  --ink:#433B33;--ink2:#6E655B;--line:#E9DFCE;--gold:#BE9F62;--blue:#8AA6C8}
-html,body{background:#E7DDCB}
-body{font-family:'UI',sans-serif;color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
-.app{max-width:432px;margin:0 auto;min-height:100vh;background:var(--cream);position:relative;padding-bottom:80px;overflow-x:hidden;box-shadow:0 0 60px -20px rgba(74,58,48,.35)}
+/* Фон страницы = фон приложения: на экранах шире 432px по бокам не торчат
+   бежевые полосы, приложение просто продолжается краем в край. */
+html,body{background:var(--cream)}
+body{font-family:'UI',sans-serif;color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.app{max-width:432px;margin:0 auto;min-height:100vh;background:var(--cream);position:relative;padding-bottom:80px;overflow-x:hidden}
 h1,h2,h3,.disp{font-family:'Disp';font-weight:500;line-height:1.1}
 .it{font-family:'DispI';font-style:italic}
 .eyebrow{font-size:10.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--rose-d)}
