@@ -1,16 +1,17 @@
-const CACHE='pion-wedding-v7';
-const ASSETS=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./icon-180.png'];
-self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)));self.skipWaiting();});
-self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
-// Документ — «сначала сеть»: свежая версия приезжает сразу, кэш остаётся только запасным вариантом
-// на случай оффлайна. Остальное (иконки, манифест) — «сначала кэш», они меняются редко.
-self.addEventListener('fetch',e=>{
-  if(e.request.method!=='GET')return;
-  const isDoc=e.request.mode==='navigate'||e.request.destination==='document';
-  if(isDoc){
-    e.respondWith(fetch(e.request).then(res=>{const cp=res.clone();caches.open(CACHE).then(c=>c.put(e.request,cp));return res;})
-      .catch(()=>caches.match(e.request).then(r=>r||caches.match('./index.html'))));
-    return;
+// Пион переехал на wedding.zimermans.ru. Этот SW самоудаляется, чистит кэш
+// старого PWA и уводит открытые вкладки на новый адрес.
+self.addEventListener('install', () => self.skipWaiting());
+self.addEventListener('activate', (e) => {
+  e.waitUntil((async () => {
+    const ks = await caches.keys();
+    await Promise.all(ks.map((k) => caches.delete(k)));
+    await self.registration.unregister();
+    const clients = await self.clients.matchAll({ type: 'window' });
+    clients.forEach((c) => c.navigate('https://wedding.zimermans.ru/'));
+  })());
+});
+self.addEventListener('fetch', (e) => {
+  if (e.request.mode === 'navigate') {
+    e.respondWith(Response.redirect('https://wedding.zimermans.ru/', 302));
   }
-  e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(res=>{const cp=res.clone();caches.open(CACHE).then(c=>c.put(e.request,cp));return res;}).catch(()=>caches.match('./index.html'))));
 });
